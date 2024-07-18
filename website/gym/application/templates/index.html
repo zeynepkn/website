@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-training-studio.css') }}">
+
+        <title>Ana Sayfa</title>
+    </head>
+    
+    <body>
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <a href="{{ url_for('index') }}" class="logo">FIT<em> LIFE</em></a>
+                            <ul class="nav">
+                                <li class="scroll-to-section"><a href="{{ url_for('index') }}" class="active">Anasayfa</a></li>
+                                <li class="scroll-to-section"><a href="{{ url_for('index') }}#features">Hakkımızda</a></li>
+                                <li class="scroll-to-section"><a href="{{ url_for('trainers') }}">Eğitmenlerimiz</a></li>
+                                {% if current_user.is_admin %}
+                                <li class="scroll-to-section"><a href="{{ url_for('admin_panel') }}">Admin Paneli</a></li>
+                                {% endif %}
+                                {% if current_user.is_authenticated %}
+                                <li class="scroll-to-section"><a href="{{ url_for('workout_log') }}">Eğitimlerim</a></li>
+                                <li class="scroll-to-section"><a href="{{ url_for('logout') }}">Çıkış Yap</a></li>
+                                {% endif %}
+                                {% if not current_user.is_authenticated %}
+                                <li class="main-button"><a href="{{ url_for('login') }}">Giriş Yap</a></li>
+                                {% endif %}
+                            </ul>        
+                            <a class='menu-trigger'>
+                                <span>Menu</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-banner" id="top">
+            <img src="static/images/gym.png" alt="gym">
+            <div class="video-overlay header-text">
+                <div class="caption">
+                    <h6>Sınırlarını aş, hedeflerine ulaş</h6>
+                    <h2>FIT <em>LIFE!</em></h2>
+                    <div class="main-button scroll-to-section">
+                        <a href="{{ url_for('register') }}">Üye Ol</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="section" id="features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <div class="section-heading">
+                            <h2>HAKKIMIZDA</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="features-items">
+                            <li class="feature-item">
+
+                                <div class="right-content">
+                                    <h4>Profesyonel Antrenörler</h4>
+                                    <p>Uzman kadromuzla her zaman en iyi hizmeti sunmayı hedefliyoruz.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+
+                                <div class="right-content">
+                                    <h4>Esnek Çalışma Saatleri</h4>
+                                    <p>Sizlere en uygun saatlerde spor yapma imkanı sunuyoruz.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+
+                                <div class="right-content">
+                                    <h4>Son Teknoloji Ekipmanlar</h4>
+                                    <p>En güncel ve en kaliteli ekipmanlarla çalışmanız için ortam sağlıyoruz.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="features-items">
+                            <li class="feature-item">
+
+                                <div class="right-content">
+                                    <h4>Bireysel ve Grup Eğitimleri</h4>
+                                    <p>Bireysel antrenmanlar veya grup dersleriyle hedeflerinize ulaşın.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+
+                                <div class="right-content">
+                                    <h4>Beslenme Danışmanlığı</h4>
+                                    <p>Sağlıklı yaşamın temeli olan beslenme danışmanlığı hizmeti sunuyoruz.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+
+                                <div class="right-content">
+                                    <h4>Ücretsiz Deneme</h4>
+                                    <p>Ücretsiz deneme derslerimizle fit life farkını yaşayın.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; 2020 FitLife</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="{{ url_for('static', filename='js/jquery-2.1.0.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/scrollreveal.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/imgfix.min.js') }}"></script> 
+        <script src="{{ url_for('static', filename='js/mixitup.js') }}"></script> 
+        <script src="{{ url_for('static', filename='js/accordions.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    </body>
+</html>

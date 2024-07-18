@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Admin Panel</h1>
+
+<ul class="nav nav-tabs" id="adminTabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">Kullanıcılar</button>
+  </li>
+</ul>
+
+<div class="tab-content" id="adminTabContent">
+  <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+    <h2>Kullanıcılar</h2>
+    <button class="btn btn-primary mb-3" onclick="showAddUserForm()">Yeni Kullanıcı Ekle</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Kullanıcı Adı</th>
+          <th>Ad</th>
+          <th>Soyad</th>
+          <th>Admin</th>
+          <th>İşlemler</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{% if user.is_admin %}Evet{% else %}Hayır{% endif %}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" onclick="showEditUserForm('{{ user.id }}')">Düzenle</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteUser('{{ user.id }}')">Sil</button>
+          </td>          
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- EKLE -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Yeni Kullanıcı Ekle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addUserForm">
+          <div class="mb-3">
+            <label for="username" class="form-label">Kullanıcı Adı</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="firstname" class="form-label">Ad</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" required>
+          </div>
+          <div class="mb-3">
+            <label for="lastname" class="form-label">Soyad</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Şifre</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin">
+            <label class="form-check-label" for="is_admin">Admin</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+        <button type="button" class="btn btn-primary" onclick="addUser()">Kullanıcı Ekle</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DÜZENLE -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">Kullanıcı Düzenle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editUserForm">
+          <input type="hidden" id="edit_user_id" name="user_id">
+          <div class="mb-3">
+            <label for="edit_username" class="form-label">Kullanıcı Adı</label>
+            <input type="text" class="form-control" id="edit_username" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_firstname" class="form-label">Ad</label>
+            <input type="text" class="form-control" id="edit_firstname" name="firstname" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_lastname" class="form-label">Soyad</label>
+            <input type="text" class="form-control" id="edit_lastname" name="lastname" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_password" class="form-label">Şifre (Boş bırakırsanız değişmez)</label>
+            <input type="password" class="form-control" id="edit_password" name="password">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="edit_is_admin" name="is_admin">
+            <label class="form-check-label" for="edit_is_admin">Admin</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+        <button type="button" class="btn btn-primary" onclick="editUser()">Kullanıcıyı Güncelle</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showAddUserForm() {
+  $('#addUserModal').modal('show');
+}
+
+function showEditUserForm(userId) {
+  $.get(`/admin/get_user/${userId}`, function(data) {
+    $('#edit_user_id').val(data.id);
+    $('#edit_username').val(data.username);
+    $('#edit_firstname').val(data.firstname);
+    $('#edit_lastname').val(data.lastname);
+    $('#edit_is_admin').prop('checked', data.is_admin);
+    $('#editUserModal').modal('show');
+  });
+}
+
+function addUser() {
+  $.post('/admin/add_user', $('#addUserForm').serialize(), function(response) {
+    if (response.success) {
+      location.reload();
+    } else {
+      alert(response.message || 'Kullanıcı eklenirken bir hata oluştu.');
+    }
+  });
+}
+
+function editUser() {
+  $.post('/admin/edit_user/' + $('#edit_user_id').val(), $('#editUserForm').serialize(), function(response) {
+    if (response.success) {
+      location.reload();
+    } else {
+      alert(response.message || 'Kullanıcı güncellenirken bir hata oluştu.');
+    }
+  });
+}
+
+function deleteUser(userId) {
+  if (confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')) {
+    $.post('/admin/delete_user/' + userId, function(response) {
+      if (response.success) {
+        location.reload();
+      } else {
+        alert(response.message || 'Kullanıcı silinirken bir hata oluştu.');
+      }
+    });
+  }
+}
+</script>
+{% endblock %}

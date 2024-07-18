@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Eğitim Programları{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1>Sağlıklı Yaşam Eğitim Programları</h1>
+    <p>Fitness, Yoga ve Pilates ile sağlıklı bir yaşam için adım atın. Aşağıdaki eğitim videolarını izleyerek başlayabilirsiniz.</p>
+</div>
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="static/images/fitness.jpg" class="card-img-top" alt="Fitness">
+                <div class="card-body">
+                    <h5 class="card-title">Fitness</h5>
+                    <p class="card-text">Fitness videomuzla vücudunuzu güçlendirin ve formda kalın. Başlamak için videoyu izleyin.</p>
+                    <a href="static/videos/fitness.mp4" class="btn btn-primary">Videoyu İzle</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <img src="static/images/yoga.jpg" class="card-img-top" alt="Yoga">
+                <div class="card-body">
+                    <h5 class="card-title">Yoga</h5>
+                    <p class="card-text">Yoga videomuzla zihin ve beden dengenizi bulun. Başlamak için videoyu izleyin.</p>
+                    <a href="static/videos/yoga.mp4" class="btn btn-primary">Videoyu İzle</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <img src="static/images/pilates.jpg" class="card-img-top" alt="Pilates">
+                <div class="card-body">
+                    <h5 class="card-title">Pilates</h5>
+                    <p class="card-text">Pilates videomuzla esnekliğinizi artırın ve kaslarınızı güçlendirin. Başlamak için videoyu izleyin.</p>
+                    <a href="static/videos/pilates.mp4" class="btn btn-primary">Videoyu İzle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+<style>
+    .card {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .card-img-top {
+        max-height: 200px;
+        object-fit: cover;
+    }
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .card-text {
+        font-size: 1rem;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
